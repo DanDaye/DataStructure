@@ -1,5 +1,6 @@
 package DATA_STRUCTURE.base_datastructure;
 
+
 public class tree {
 
     public void INORDER_TREE_WALK(treenode x){
@@ -104,6 +105,37 @@ public class tree {
         }
 
     }
+
+    public void TRANSPLANT(treenode root,treenode u,treenode v){
+        if (u.getParent() == null){
+            root = v;
+        }else if(u==u.getParent().getLeft()){
+            u.getParent().setLeft(v);
+        }else {
+            u.getParent().setRight(v);
+        }
+        if (v!=null){
+            v.setParent(u.getParent());
+        }
+    }
+
+    public void TREE_DELETE(treenode root,treenode z){
+        if (z.getLeft()==null){
+            TRANSPLANT(root,z,z.getRight());
+        }else if (z.getRight() == null){
+            TRANSPLANT(root,z,z.getLeft());
+        }else {
+            treenode y = TREE_MINIMUM(z.getRight());
+            if (y.getParent()!=z){
+                TRANSPLANT(root,y,y.getRight());
+                y.setRight(z.getRight());
+                y.getRight().setParent(y);
+            }
+            TRANSPLANT(root,z,y);
+            y.setLeft(z.getLeft());
+            y.getLeft().setParent(y);
+        }
+    }
     public static void main(String[] args){
         treenode root = new treenode(6);
         root.setLeft(new treenode(5));
@@ -116,10 +148,11 @@ public class tree {
         tree t = new tree();
 //        t.INORDER_TREE_WALK(root);
         treenode result = t.TREE_SEARCH(root,5);
-        int val = t.TREE_MINIMUM(root);
-        int maxval = t.TREE_MAXIMUM(root);
+        treenode val = t.TREE_MINIMUM(root);
+        treenode maxval = t.TREE_MAXIMUM(root);
         t.TREE_SUCCESSOR(left);
         t.TREE_PREDECESSOR(right);
+        t.TREE_DELETE(root,right);
 
     }
 }
@@ -156,7 +189,7 @@ class treenode{
     public treenode getParent(){
         return this.parent;
     }
-    public treenode setParent(treenode node){
+    public void setParent(treenode node){
         this.parent = node;
     }
 }

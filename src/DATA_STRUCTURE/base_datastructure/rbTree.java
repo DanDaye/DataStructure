@@ -49,7 +49,7 @@ public class rbTree {
 
     public void RB_INSERT(TreeNode root,int key){
         TreeNode z = new TreeNode(key);
-        TreeNode y;
+        TreeNode y=null;
         while (root!=null){
             y = root;
             if (y.getKey()>=z.getKey()){
@@ -160,7 +160,54 @@ public class rbTree {
     }
 
     private void RB_DELETE_FIXUP(TreeNode root, TreeNode x) {
-
+        while (x!=root && x.getColor()==Red){
+//            情况1：
+            if (x == x.getParent().getLeft()){
+                TreeNode w = x.getParent().getRight();
+                if (w.getColor()==Red){
+                    w.setColor(Black);
+                    x.getParent().setColor(Red);
+                    LEFT_ROATE(x.getParent());
+                    w = x.getParent().getRight();
+                }
+                if (w.getLeft().getColor() == Black && w.getRight().getColor() == Black){
+                    w.setColor(Red);
+                    x = x.getParent();
+                }else if (w.getRight().getColor() == Black){
+                    w.getLeft().setColor(Black);
+                    w.setColor(Red);
+                    RIGHT_ROATE(w);
+                    w = x.getParent().getRight();
+                }
+                w.setColor(x.getParent().getColor());
+                x.getParent().setColor(Black);
+                w.getRight().setColor(Black);
+                LEFT_ROATE(x.getParent());
+                x = root;
+            }else {
+                TreeNode w = x.getParent().getLeft();
+                if (w.getColor()==Red){
+                    w.setColor(Black);
+                    x.getParent().setColor(Red);
+                    LEFT_ROATE(x.getParent());
+                }
+                if (w.getLeft().getColor() == Black && w.getRight().getColor() == Black){
+                    w.setColor(Red);
+                    x = x.getParent();
+                }else if (w.getRight().getColor() == Black){
+                    w.getLeft().setColor(Black);
+                    w.setColor(Red);
+                    LEFT_ROATE(w);
+                    w = x.getParent().getRight();
+                }
+                w.setColor(x.getParent().getColor());
+               x.getParent().setColor(Red);
+               w.getRight().setColor(Black);
+               LEFT_ROATE(x.getParent());
+               x = root;
+            }
+        }
+        x.setColor(Black);
     }
 
     private TreeNode Tree_MIMIMUM(TreeNode x) {
