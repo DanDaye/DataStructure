@@ -25,6 +25,7 @@ public class heap_sort
             MAX_HEAPIFY(num,i,heap_size);
         }
     }
+
     public void HEAPSORT(int[] num){
         BUILD_MAX_HEAP(num,num.length);
         int heap_size = num.length;
