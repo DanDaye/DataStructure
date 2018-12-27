@@ -41,7 +41,7 @@ public class SortCompare {
                     }
                 }
                 if (!flag){
-                     
+
                 }
                 break;
         }
