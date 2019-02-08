@@ -21,8 +21,4 @@ public class lastNnode {
             return after;
         }
     }
-
-    public static void main(String[] args){
-
-    }
 }
