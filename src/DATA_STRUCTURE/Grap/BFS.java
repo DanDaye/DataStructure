@@ -73,7 +73,6 @@ public class BFS {
             }
             w = getNextNeighbor(i,w);
         }
-
     }
 
     private void broadFirstSearch(boolean[] isVisited,int i){
